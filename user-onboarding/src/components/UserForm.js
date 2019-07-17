@@ -95,14 +95,14 @@ export default withFormik({
     name: Yup.string()
       .min(3, "Name must be at least 3 characters long")
       .max(10, "Name must be less than 10 characters")
-      .required("Name is required"),
+      .required("Yo, you left out your name!"),
     email: Yup.string()
       .min(3, "Name must be at least 3 characters long")
       .email("Email must be formatted like name@company.com")
-      .required("Email is required"),
+      .required("Come on, no email!? Pshh, try again"),
     password: Yup.string()
       .min(8, "Name must be at least 8 characters long")
-      .required("Password is required"),
+      .required("WTF you know you need a password, right?!"),
     tos: Yup.boolean()
       .oneOf([true], "Must Accept Terms of Service")
       .required()
