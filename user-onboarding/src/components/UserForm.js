@@ -5,7 +5,7 @@ import axios from "axios";
 
 import "../styles.css";
 
-const UserForm = ({ errors, touched, isSubmitting }) => {
+const UserForm = ({ values, errors, touched, isSubmitting }) => {
   return (
     <Form className="login-form">
       <h2>Create An Account</h2>
@@ -48,10 +48,10 @@ const UserForm = ({ errors, touched, isSubmitting }) => {
       <div className="form-group-tos">
         <label htmlFor="tos">Terms of Service</label>
         <Field
-          autoComplete="off"
           type="checkbox"
           id="tos"
           name="tos"
+          checked={values.tos}
           className={errors.tos ? "invalid" : ""}
         />
         <p className="error-text">{touched.tos && errors.tos}</p>
@@ -76,7 +76,6 @@ export default withFormik({
   handleSubmit(values, formikBag) {
     console.log("FORM SUBMITTED SUCCESSFULLY!");
     console.log(values);
-    formikBag.resetForm();
     const url = "https://reqres.in/api/users";
     formikBag.setSubmitting(true);
     axios.post(url, values).then(res => {
@@ -88,6 +87,7 @@ export default withFormik({
           res.data.email
         } confirming your new account. Happy Hacking!`
       );
+      formikBag.resetForm();
       formikBag.setSubmitting(false);
     });
   },
@@ -103,8 +103,6 @@ export default withFormik({
     password: Yup.string()
       .min(8, "Name must be at least 8 characters long")
       .required("WTF you know you need a password, right?!"),
-    tos: Yup.boolean()
-      .oneOf([true], "Must Accept Terms of Service")
-      .required()
+    tos: Yup.boolean().oneOf([true], "Must Accept Terms of Service")
   })
 })(UserForm);
