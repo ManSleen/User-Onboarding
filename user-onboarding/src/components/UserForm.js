@@ -18,7 +18,7 @@ const UserForm = ({ errors, touched, isSubmitting }) => {
           name="name"
           className={errors.name ? "invalid" : ""}
         />
-        <p>{touched.name && errors.name}</p>
+        <p className="error-text">{touched.name && errors.name}</p>
       </div>
 
       <div className="form-group">
@@ -47,10 +47,16 @@ const UserForm = ({ errors, touched, isSubmitting }) => {
 
       <div className="form-group-tos">
         <label htmlFor="tos">Terms of Service</label>
-        <Field autoComplete="off" type="checkbox" id="tos" name="tos" />
+        <Field
+          autoComplete="off"
+          type="checkbox"
+          id="tos"
+          name="tos"
+          className={errors.tos ? "invalid" : ""}
+        />
         <p className="error-text">{touched.tos && errors.tos}</p>
       </div>
-
+      {isSubmitting && <p>Loading...</p>}
       <button type="submit" className="submit-button">
         Submit &rarr;
       </button>
@@ -97,6 +103,8 @@ export default withFormik({
     password: Yup.string()
       .min(8, "Name must be at least 8 characters long")
       .required("Password is required"),
-    tos: Yup.boolean().required("You must accept the Terms of Service")
+    tos: Yup.boolean()
+      .oneOf([true], "Must Accept Terms of Service")
+      .required()
   })
 })(UserForm);
