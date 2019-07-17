@@ -8,6 +8,7 @@ import "../styles.css";
 const UserForm = ({ errors, touched, isSubmitting }) => {
   return (
     <Form className="login-form">
+      <h2>Create An Account</h2>
       <div className="form-group">
         <label htmlFor="name">Name</label>
         <Field
@@ -29,7 +30,7 @@ const UserForm = ({ errors, touched, isSubmitting }) => {
           name="email"
           className={errors.email ? "invalid" : ""}
         />
-        <p>{touched.email && errors.email}</p>
+        <p className="error-text">{touched.email && errors.email}</p>
       </div>
 
       <div className="form-group">
@@ -41,16 +42,18 @@ const UserForm = ({ errors, touched, isSubmitting }) => {
           name="password"
           className={errors.password ? "invalid" : ""}
         />
-        <p>{touched.password && errors.password}</p>
+        <p className="error-text">{touched.password && errors.password}</p>
       </div>
 
-      <div>
+      <div className="form-group-tos">
         <label htmlFor="tos">Terms of Service</label>
         <Field autoComplete="off" type="checkbox" id="tos" name="tos" />
-        <p>{touched.tos && errors.tos}</p>
+        <p className="error-text">{touched.tos && errors.tos}</p>
       </div>
 
-      <button type="submit">Submit &rarr;</button>
+      <button type="submit" className="submit-button">
+        Submit &rarr;
+      </button>
     </Form>
   );
 };
@@ -64,9 +67,23 @@ export default withFormik({
       tos: false
     };
   },
-  handleSubmit(values) {
+  handleSubmit(values, formikBag) {
     console.log("FORM SUBMITTED SUCCESSFULLY!");
     console.log(values);
+    formikBag.resetForm();
+    const url = "https://reqres.in/api/users";
+    formikBag.setSubmitting(true);
+    axios.post(url, values).then(res => {
+      console.log(res.data);
+      window.alert(
+        `Thanks ${
+          res.data.name
+        }, your form has been submitted. You'll recieve an email at ${
+          res.data.email
+        } confirming your new account. Happy Hacking!`
+      );
+      formikBag.setSubmitting(false);
+    });
   },
   validationSchema: Yup.object().shape({
     name: Yup.string()
@@ -79,6 +96,7 @@ export default withFormik({
       .required("Email is required"),
     password: Yup.string()
       .min(8, "Name must be at least 8 characters long")
-      .required("Password is required")
+      .required("Password is required"),
+    tos: Yup.boolean().required("You must accept the Terms of Service")
   })
 })(UserForm);

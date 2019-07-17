@@ -130,6 +130,15 @@ table {
 
 /* General Styles */
 
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+}
+
 body {
   font-family: "Roboto", sans-serif;
   font-weight: 400;
@@ -206,4 +215,17 @@ body {
 .submit-button:focus,
 .submit-button:active {
   outline-offset: 5px;
+}
+
+.error-text {
+  font-size: 12px;
+  color: #e57373;
+  margin-top: 5px;
+}
+
+.form-group-tos {
+  color: #999;
+  font-size: 13px;
+  display: block;
+  margin-bottom: 10px;
 }
