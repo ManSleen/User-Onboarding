@@ -3,20 +3,52 @@ import { withFormik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 
+import "../styles.css";
+
 const UserForm = ({ errors, touched, isSubmitting }) => {
   return (
-    <Form>
-      <label htmlFor="name">Name</label>
-      <Field autoComplete="off" type="text" id="name" name="name" />
+    <Form className="login-form">
+      <div className="form-group">
+        <label htmlFor="name">Name</label>
+        <Field
+          autoComplete="off"
+          type="text"
+          id="name"
+          name="name"
+          className={errors.name ? "invalid" : ""}
+        />
+        <p>{touched.name && errors.name}</p>
+      </div>
 
-      <label htmlFor="email">Email</label>
-      <Field autoComplete="off" type="text" id="email" name="email" />
+      <div className="form-group">
+        <label htmlFor="email">Email</label>
+        <Field
+          autoComplete="off"
+          type="text"
+          id="email"
+          name="email"
+          className={errors.email ? "invalid" : ""}
+        />
+        <p>{touched.email && errors.email}</p>
+      </div>
 
-      <label htmlFor="password">Password</label>
-      <Field autoComplete="off" type="password" id="password" name="password" />
+      <div className="form-group">
+        <label htmlFor="password">Password</label>
+        <Field
+          autoComplete="off"
+          type="password"
+          id="password"
+          name="password"
+          className={errors.password ? "invalid" : ""}
+        />
+        <p>{touched.password && errors.password}</p>
+      </div>
 
-      <label htmlFor="tos">Terms of Service</label>
-      <Field autoComplete="off" type="checkbox" id="tos" name="tos" />
+      <div>
+        <label htmlFor="tos">Terms of Service</label>
+        <Field autoComplete="off" type="checkbox" id="tos" name="tos" />
+        <p>{touched.tos && errors.tos}</p>
+      </div>
 
       <button type="submit">Submit &rarr;</button>
     </Form>
