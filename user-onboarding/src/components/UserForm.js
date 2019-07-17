@@ -99,7 +99,7 @@ export default withFormik({
     email: Yup.string()
       .min(3, "Name must be at least 3 characters long")
       .email("Email must be formatted like name@company.com")
-      .required("Come on, no email!? Pshh, try again"),
+      .required("Come on bro, no email!? Pshh, try again!"),
     password: Yup.string()
       .min(8, "Name must be at least 8 characters long")
       .required("WTF you know you need a password, right?!"),
